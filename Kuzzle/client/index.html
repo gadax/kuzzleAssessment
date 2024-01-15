@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Kuzzle client</title>
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding: 5em;
+				background-color: #222;
+				color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main id="app">
+			<section>
+				<input v-model:value="author" type="text" name="author">
+				<input v-model:value="messageToSend" type="text" name="messageToSend">
+				<button v-on:click="send">Envoyer</button>
+			</section>
+			<aside>
+				<ol>
+					<li v-for="message in messages">
+						<strong>{{ message.author }} : </strong>
+						<span>{{ message.message }}</span>
+					</li>
+				</ol>
+			</aside>
+		</main>
+
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kuzzle-sdk@latest/dist/kuzzle.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+		<script src="kuzzle.js"></script>
+		<script type="text/javascript">
+
+			const app = new Vue({
+				el: '#app',
+				data: {
+					author: 'user01',
+					messageToSend: '',
+					messages: sessionMessages
+				},
+				methods: {
+					send: async function () {
+						await sendMessage(this.author, this.messageToSend);
+					}
+				}
+			});
+			
+		</script>
+	</body>
+</html>
